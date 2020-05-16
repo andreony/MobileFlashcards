@@ -1,15 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Provider } from 'react-redux'
+import { Provider, useDispatch } from 'react-redux'
 import store from './app/store'
+import { fetchCardDeksAsync } from './features/cards/cardsSlice'
+import CardDeckList from './features/cards/CardDeckList'
 
 export default function App() {
   return (
     <Provider store={store}>
-      <View style={styles.container}>
-        <Text>Open up App.tsx to start working on your app!</Text>
-      </View>
+      <AppChild />
     </Provider>
+  )
+}
+
+function AppChild() {
+  const dispatch = useDispatch() 
+
+  useEffect( () => {
+    dispatch(fetchCardDeksAsync())
+  },[dispatch])
+
+  return (
+      <View style={styles.container}>
+        <CardDeckList />
+      </View>
   );
 }
 
@@ -17,7 +31,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 20
   },
 });

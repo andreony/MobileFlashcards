@@ -1,5 +1,5 @@
 const logger = (store) => (next) => (action) => {
-    console.group(action.Type)
+    console.group(action.type)
         console.log('Action: ')
         console.log(action)
         const returnVal = next(action)
