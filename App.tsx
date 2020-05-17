@@ -4,6 +4,10 @@ import { Provider, useDispatch } from 'react-redux'
 import store from './app/store'
 import { fetchCardDeksAsync } from './features/cards/cardsSlice'
 import CardDeckList from './features/cards/CardDeckList'
+import NewCardDeck from './features/cards/NewCardDeck'
+import AddQAndA from './features/cards/AddQAndA'
+import CardDeckView from './features/cards/CardDeckView'
+import { white } from './utils/colors'
 
 export default function App() {
   return (
@@ -22,7 +26,10 @@ function AppChild() {
 
   return (
       <View style={styles.container}>
-        <CardDeckList />
+        {/* <CardDeckList /> */}
+        {/* <NewCardDeck /> */}
+        {/* <AddQAndA title={'JavaScript'}/> */}
+        <CardDeckView title={'JavaScript'}/>
       </View>
   );
 }
@@ -30,7 +37,7 @@ function AppChild() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: white,
     padding: 20
   },
 });

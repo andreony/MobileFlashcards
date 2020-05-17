@@ -1,5 +1,7 @@
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
+import { white, gray } from '../../utils/colors'
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 //import BootstrapStyleSheet from 'react-native-bootstrap-styles'
 
 // const bootstrapStyleSheet = new BootstrapStyleSheet(constants, classes);
@@ -7,21 +9,26 @@ import { Text, View, StyleSheet } from 'react-native'
 //const c = constants = bootstrapStyleSheet.constants;
 
 const CardDeck = ({card}) => (
-	<View style={[s.card]}>
-		<View style={[s.cardBody]}>
-			<Text style={[s.textCenter]}>{card.title}</Text>
-			<Text style={[s.textCenter, {color: "gray"}]}>{card.questions.length} Cards</Text>
+	<View style={[styles.card]}>
+		<View style={styles.cardBody}>
+			<View style={styles.cardIcon}>
+				<MaterialCommunityIcons name="cards" size={48} color="black" />
+			</View>
+			<View style={styles.cardTextWrapper}>
+				<Text style={styles.cardTitle}>{card.title}</Text>
+				<Text style={styles.cardText}>{card.questions.length} Cards</Text>
+			</View>
 		</View>
 	</View>
 )
-const s = StyleSheet.create({
+const styles = StyleSheet.create({
 	card:{
-		flexDirection: "row",
-		alignItems: 'center',
+		backgroundColor: white,
 		justifyContent: "center",
 		alignSelf: 'stretch',
 		padding: 5,
-		margin: 5,
+		marginHorizontal: 5,
+		marginBottom: 15,
 		borderRadius: 5,
 		shadowRadius: 3,
 		shadowOpacity: 0.8,
@@ -32,10 +39,32 @@ const s = StyleSheet.create({
 		}
 	},
 	cardBody:{
-		padding: 5,
+		flex:1,
+		flexDirection: 'row',
+		padding: 10,
 	},
-	textCenter:{
-		textAlign: "center"
+	cardIcon:{
+		flex:1,
+		justifyContent:"center",
+		alignItems: "center",
+		alignSelf: 'flex-start'
+	},
+	cardTextWrapper: {
+		flex: 4,
+		justifyContent:"center",
+		alignItems: "center"
+	},
+	center:{
+		justifyContent:"center",
+		alignItems: "center"
+	},
+	cardTitle:{
+		fontSize: 24,
+		fontStyle: "italic"
+	},
+	cardText:{
+		fontSize: 18,
+		color: gray
 	}
 })
 export default CardDeck

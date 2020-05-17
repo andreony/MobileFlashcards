@@ -4,6 +4,7 @@ import CardDeck from './CardDeck';
 import { AppLoading } from 'expo';
 import { useSelector, connect } from 'react-redux';
 import { selectAllCards } from './cardsSlice'
+import { lightBlue, white } from '../../utils/colors';
 
 const CardDeckList = () => {
 	
@@ -21,8 +22,9 @@ const styles = StyleSheet.create({
 	container:{
 		flex:1,
 		justifyContent: "center",
-		alignItems: 'center'
-	}
+		alignItems: 'center',
+		backgroundColor: lightBlue
+	},
 })
 const mapStateToProps = ({cards}) => ({
 	cards
