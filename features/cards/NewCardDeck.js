@@ -14,9 +14,9 @@ import { useDispatch } from 'react-redux'
 import { addCardDeckAsync } from './cardsSlice'
 import StyledTextInput from './StyledTextInput'
 
-const NewCardDeck = () => {
+const NewCardDeck = ({ navigation }) => {
 
-	const initialState = {title:''}
+	const initialState = {title:'', questions: []}
 	const [ newDeck, setState  ] = useState(initialState)
 	const dispatch = useDispatch()
 
@@ -26,9 +26,10 @@ const NewCardDeck = () => {
 			console.log('Title is empty', newDeck)
 			return false
 		}
-		console.log('dispatching', newDeck)
+		//console.log('dispatching', newDeck)
 		dispatch(addCardDeckAsync(newDeck))
 		setState(initialState)
+		navigation.goBack()
 	}
 
 	return (
@@ -41,14 +42,14 @@ const NewCardDeck = () => {
 					placeholder="Deck Title"
 					maxLength={240}
 					onBlur={Keyboard.dismiss}
-					onChangeText={ (text) => setState({title: text})}
+					onChangeText={ (text) => setState({...newDeck, title: text})}
 					value={newDeck.title}
 				/>
 			</KeyboardAvoidingView>
 			<TouchableOpacity
 				onPress={handleSave}  
 				style={styles.saveButton}>
-				<Text style={styles.saveButtonText}> Save </Text>
+				<Text style={styles.saveButtonText}> Create Deck </Text>
 			</TouchableOpacity>
 		</View>
 	)

@@ -10,7 +10,7 @@ export const addCardDeckAsync = createAsyncThunk("cards/addDeck",
 	async (payload, thunkAPI) => {
 		const { title } = payload	
 		await cardsAPI.addEntity(title)
-		console.log('add results from Thunk: ', payload)
+		//console.log('add results from Thunk: ', payload)
 		return payload
 	}
 )
@@ -19,7 +19,7 @@ export const addQandACard = createAsyncThunk('cards/addQandA',
 	async (payload, thunkAPI) => {
 		const { title, card } = payload
 		const results = await cardsAPI.addQandA({title, card})
-		console.log('results from Thunk: ', results)
+		//console.log('results from Thunk: ', results)
 		return results
 })
 

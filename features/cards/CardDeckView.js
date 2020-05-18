@@ -6,26 +6,31 @@ import { AppLoading } from 'expo'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const CardDeckView = ({card}) => {
-
-	if(!card)
+const CardDeckView = ({ card, navigation }) => {
+	const {title, questions} = card
+	
+	if(!title)
 		return <AppLoading/>
 
 	return (
 		<View style={styles.container}>
 			<View>
-				<Text style={styles.title}>{card.title}</Text>
+				<Text style={styles.title}>{title}</Text>
 				<View style={styles.rowCenter}>
-					<Text style={styles.textSecondary}>{card.questions.length}</Text>
+					<Text style={styles.textSecondary}>{questions.length}</Text>
 					<MaterialCommunityIcons name="cards" size={30} color="black" />
 				</View>
 			</View>
 			<View>
-				<TouchableOpacity style={[styles.Btn, styles.AddButton]}>
+				<TouchableOpacity 
+					style={[styles.Btn, styles.AddButton]}
+					onPress={() => navigation.navigate("Add Quiz", {title})}>
 					<Text style={styles.ButtonTextBlue}>Add Card</Text>
 				</TouchableOpacity>
-				{card.questions.length &&(
-					<TouchableOpacity style={[styles.Btn, styles.QuizButton]}>
+				{questions.length > 0 &&(
+					<TouchableOpacity 
+						style={[styles.Btn, styles.QuizButton]}
+						onPress={() => navigation.navigate("Quiz", {questions})}>
 						<Text style={styles.ButtonTextWhite}>Start Quiz</Text>
 					</TouchableOpacity>
 				)}
@@ -33,12 +38,11 @@ const CardDeckView = ({card}) => {
 		</View>
 	)
 }
-const mapStateToProps = ({cards}, {title}) => {
-	console.log(title)
-	console.log(cards)
-	const ids = cards.ids
+const mapStateToProps = ({cards}, {navigation, route}) => {
+	const {title} = route.params
 	return {
-		card: cards.entities[title]
+		card: cards.entities[title],
+		navigation
 	}
 }
 

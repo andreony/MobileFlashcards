@@ -1,15 +1,18 @@
 import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { white, gray } from '../../utils/colors'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { AppLoading } from 'expo';
 //import BootstrapStyleSheet from 'react-native-bootstrap-styles'
 
 // const bootstrapStyleSheet = new BootstrapStyleSheet(constants, classes);
 // const s = styles = bootstrapStyleSheet.create();
 //const c = constants = bootstrapStyleSheet.constants;
 
-const CardDeck = ({card}) => (
-	<View style={[styles.card]}>
+const CardDeck = ({card, onPress}) => (
+	<TouchableOpacity 
+		onPress={onPress}
+		style={[styles.card]}>
 		<View style={styles.cardBody}>
 			<View style={styles.cardIcon}>
 				<MaterialCommunityIcons name="cards" size={48} color="black" />
@@ -19,7 +22,7 @@ const CardDeck = ({card}) => (
 				<Text style={styles.cardText}>{card.questions.length} Cards</Text>
 			</View>
 		</View>
-	</View>
+	</TouchableOpacity>
 )
 const styles = StyleSheet.create({
 	card:{

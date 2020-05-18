@@ -15,7 +15,7 @@ const cardsAPI = {
 		}
 		AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify(newDeck))
 			.then( () => {
-				console.log('result from API', newDeck)
+				//console.log('result from API', newDeck)
 				return newDeck
 			})
 	},

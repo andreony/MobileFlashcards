@@ -12,7 +12,8 @@ import { useDispatch } from 'react-redux'
 import { addQandACard } from './cardsSlice'
 import { lightBlue } from '../../utils/colors'
 
-const AddQandA = ({title}) => {
+const AddQandA = ({navigation, route}) => {
+	const { title } = route.params
 	const initialState = {
 		title: title,
 		card:{
@@ -32,6 +33,7 @@ const AddQandA = ({title}) => {
 		console.log('dispatching', newQandA)
 		dispatch(addQandACard(newQandA))
 		setState(initialState)
+		navigation.goBack()
 	}
 	
 	return (
