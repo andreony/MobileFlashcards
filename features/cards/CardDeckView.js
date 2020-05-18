@@ -1,14 +1,19 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
-import { white, gray } from '../../utils/colors'
+import { white, gray, purple } from '../../utils/colors'
 import { AppLoading } from 'expo'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { removeDeckAsync } from './cardsSlice'
 
-const CardDeckView = ({ card, navigation }) => {
+const CardDeckView = ({ card, navigation, dispatch }) => {
 	const {title, questions} = card
-	
+	const handleDelete = () => {
+		dispatch(removeDeckAsync({title}))
+		navigation.goBack()
+	}
+
 	if(!title)
 		return <AppLoading/>
 
@@ -34,6 +39,11 @@ const CardDeckView = ({ card, navigation }) => {
 						<Text style={styles.ButtonTextWhite}>Start Quiz</Text>
 					</TouchableOpacity>
 				)}
+			</View>
+			<View style={{alignSelf: 'flex-end', marginRight: 20}}>
+				<TouchableOpacity onPress={handleDelete}>
+					<Text style={{color: purple}}> Remove Deck </Text>
+				</TouchableOpacity>
 			</View>
 		</View>
 	)

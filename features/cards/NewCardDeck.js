@@ -11,12 +11,15 @@ import {
 } from 'react-native'
 import { lightBlue } from '../../utils/colors'
 import { useDispatch } from 'react-redux'
-import { addCardDeckAsync } from './cardsSlice'
+import { addCardDeckAsync, selectCardIds } from './cardsSlice'
 import StyledTextInput from './StyledTextInput'
+import { useSelector } from 'react-redux'
+import { AppLoading } from 'expo'
 
 const NewCardDeck = ({ navigation }) => {
 
 	const initialState = {title:'', questions: []}
+	const deckTitles = useSelector(selectCardIds)
 	const [ newDeck, setState  ] = useState(initialState)
 	const dispatch = useDispatch()
 
@@ -26,7 +29,11 @@ const NewCardDeck = ({ navigation }) => {
 			console.log('Title is empty', newDeck)
 			return false
 		}
-		//console.log('dispatching', newDeck)
+		if(deckTitles.includes(newDeck.title)){
+			alert(`Title "${newDeck.title}" already exists! Please choose other title`)
+			setState(initialState)
+			return false
+		}
 		dispatch(addCardDeckAsync(newDeck))
 		setState(initialState)
 		navigation.goBack()

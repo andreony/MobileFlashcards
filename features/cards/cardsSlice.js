@@ -10,8 +10,14 @@ export const addCardDeckAsync = createAsyncThunk("cards/addDeck",
 	async (payload, thunkAPI) => {
 		const { title } = payload	
 		await cardsAPI.addEntity(title)
-		//console.log('add results from Thunk: ', payload)
 		return payload
+	}
+)
+
+export const removeDeckAsync = createAsyncThunk('cards/removeDeck',
+	async (title, { getState } ) => {
+		const response = await cardsAPI.removeDeck(title)
+		return response
 	}
 )
 
@@ -19,7 +25,6 @@ export const addQandACard = createAsyncThunk('cards/addQandA',
 	async (payload, thunkAPI) => {
 		const { title, card } = payload
 		const results = await cardsAPI.addQandA({title, card})
-		//console.log('results from Thunk: ', results)
 		return results
 })
 
@@ -50,6 +55,9 @@ const cardsSlice= createSlice({
 		});
 		builder.addCase(addCardDeckAsync.fulfilled, (state,action) => {
 			cardsAdapter.upsertOne(state, action.payload)
+		});
+		builder.addCase(removeDeckAsync.fulfilled, (state, action) => {
+			cardsAdapter.removeOne(state, action.payload.title)
 		})
 	}
 })
