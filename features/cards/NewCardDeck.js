@@ -36,7 +36,8 @@ const NewCardDeck = ({ navigation }) => {
 		}
 		dispatch(addCardDeckAsync(newDeck))
 		setState(initialState)
-		navigation.goBack()
+		//navigation.goBack()
+		navigation.navigate('DeckView', {title: newDeck.title})
 	}
 
 	return (

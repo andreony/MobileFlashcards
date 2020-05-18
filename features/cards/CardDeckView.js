@@ -8,10 +8,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { removeDeckAsync } from './cardsSlice'
 
 const CardDeckView = ({ card, navigation, dispatch }) => {
+
 	const {title, questions} = card
 	const handleDelete = () => {
 		dispatch(removeDeckAsync({title}))
-		navigation.goBack()
+		navigation.navigate('Decks')
 	}
 
 	if(!title)
@@ -51,7 +52,9 @@ const CardDeckView = ({ card, navigation, dispatch }) => {
 const mapStateToProps = ({cards}, {navigation, route}) => {
 	const {title} = route.params
 	return {
-		card: cards.entities[title],
+		card: cards.entities[title] 
+			? cards.entities[title]
+			: {},
 		navigation
 	}
 }

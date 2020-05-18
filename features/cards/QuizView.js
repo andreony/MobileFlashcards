@@ -38,10 +38,6 @@ const QuizView = ({navigation, route}) => {
 		setScore(0)
 	}
 
-	if(count > qCount){
-		console.log('count is: ', count, '  Score: ', score, '  percentage: ', (score/qCount * 100).toFixed(1), ' qCount', qCount)
-	}
-
 	const rightWrong = () => (
 		<View>
 			<TouchableOpacity 
@@ -53,7 +49,6 @@ const QuizView = ({navigation, route}) => {
 				onPress={inCorrectAnswer}>
 				<Text style={styles.textWhite}>Incorrect</Text>
 			</TouchableOpacity>
-			<Text>There Are {qCount - count } Q left </Text>
 		</View>
 	)
 
@@ -80,13 +75,12 @@ const QuizView = ({navigation, route}) => {
 							}
 								<Text style={styles.gaugeText}>You've scored {(score/qCount * 100).toFixed(1)}%</Text>
 						</View>
-						{/* <Text>Text Completed with {score} points of {qCount}</Text>	 */}
 						<TouchableOpacity style={[styles.btn, styles.btnDanger]}
 							onPress={reset}>
 							<Text style={styles.textWhite}>Reset</Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={[styles.btn, styles.btnPrimary]}
-							onPress={() => navigation.navigate("Dashboard")}>
+							onPress={() => navigation.navigate("Decks")}>
 							<Text style={styles.textWhite}>To Dashboard</Text>
 						</TouchableOpacity>
 					</View>
