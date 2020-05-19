@@ -93,8 +93,8 @@ const QuizView = ({navigation, route}) => {
 							<Text style={styles.textWhite}>Reset</Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={[styles.btn, styles.btnPrimary]}
-							onPress={() => navigation.navigate("Decks")}>
-							<Text style={styles.textWhite}>To Dashboard</Text>
+							onPress={() => navigation.goBack()}>
+							<Text style={styles.textWhite}>Back To Deck</Text>
 						</TouchableOpacity>
 					</View>
 			}
@@ -149,18 +149,11 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		textAlign: 'center'
 	},
-	gauge: {
-    position: 'absolute',
-    width: 140,
-    height: 140,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   scoreText: {
     paddingVertical:10,
     fontSize: 24,
 	},
 	progress: {
 		width: 200,
-  },
+  }
 })
