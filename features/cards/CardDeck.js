@@ -13,7 +13,10 @@ const CardDeck = ({card, onPress}) => (
 			</View>
 			<View style={styles.cardTextWrapper}>
 				<Text style={styles.cardTitle}>{card.title}</Text>
-				<Text style={styles.cardText}>{card.questions.length} Cards</Text>
+				{card.questions.length === 1 
+					? <Text style={styles.cardText}>One Card</Text>
+					: <Text style={styles.cardText}>{card.questions.length} Cards</Text>
+				} 
 			</View>
 		</View>
 	</TouchableOpacity>
@@ -26,6 +29,8 @@ const styles = StyleSheet.create({
 		padding: 5,
 		marginHorizontal: 5,
 		marginBottom: 15,
+		borderLeftWidth: 2,
+		borderLeftColor: '#8e24aa',
 		borderRadius: 5,
 		shadowRadius: 3,
 		shadowOpacity: 0.8,

@@ -1,10 +1,8 @@
-import React, { useEffect, Component } from 'react';
-import { StyleSheet, Text, View, StatusBar, AsyncStorage } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, View, StatusBar } from 'react-native';
 import { Provider, useDispatch } from 'react-redux'
 import store from './app/store'
 import { fetchCardDeksAsync } from './features/cards/cardsSlice'
-import CardDeckList from './features/cards/CardDeckList'
-import NewCardDeck from './features/cards/NewCardDeck'
 import AddQAndA from './features/cards/AddQAndA'
 import CardDeckView from './features/cards/CardDeckView'
 import Dashboard from './features/cards/Dashboard'
@@ -13,7 +11,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Constants from 'expo-constants';
 import QuizView from './features/cards/QuizView'
-import { setLocalNotification, clearLocalNotification } from './utils/helpers'
+import { setLocalNotification } from './utils/helpers'
 
 const { statusBarHeight } = Constants
 const Stack = createStackNavigator();
@@ -26,26 +24,20 @@ function MyStatusBar({ backgroundColor, ...props}) {
   )
 }
 
-
-export default class App extends Component {
-  componentDidMount(){
-    //AsyncStorage.clear()
-    clearLocalNotification()
-      .then(() => setLocalNotification())
-  }
-  render(){
-    return (
-      <Provider store={store}>
-        <AppChild />
-      </Provider>
-    )
-  }
+// add provider here... useDisptch bug
+export default function App() {
+  return (
+    <Provider store={store}>
+      <AppChild />
+    </Provider>
+  )
 }
 
 function AppChild() {
   const dispatch = useDispatch() 
 
   useEffect(() => {
+    setLocalNotification()
     dispatch(fetchCardDeksAsync())
   }, [dispatch])
 
