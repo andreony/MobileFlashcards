@@ -109,8 +109,6 @@ export function setLocalNotification () {
 									repeat: 'day', // 'minute'
 								}
 							)
-							console.info(scheduledNotification);
-							console.info(scheduledNotification);
 							AsyncStorage.setItem(NOTIFICATIONS_KEY, JSON.stringify(true))
 						}
 					})
