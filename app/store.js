@@ -6,5 +6,5 @@ export default configureStore({
     reducer:{
         cards: cardsReducer
     },
-    middleware: [...getDefaultMiddleware(), logger]
+    middleware: [...getDefaultMiddleware()] //, logger
 })

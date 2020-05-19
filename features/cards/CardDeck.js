@@ -2,12 +2,6 @@ import React from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { white, gray } from '../../utils/colors'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { AppLoading } from 'expo';
-//import BootstrapStyleSheet from 'react-native-bootstrap-styles'
-
-// const bootstrapStyleSheet = new BootstrapStyleSheet(constants, classes);
-// const s = styles = bootstrapStyleSheet.create();
-//const c = constants = bootstrapStyleSheet.constants;
 
 const CardDeck = ({card, onPress}) => (
 	<TouchableOpacity 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, AsyncStorage } from 'react-native'
 import { connect } from 'react-redux'
 import { white, gray, purple } from '../../utils/colors'
 import { AppLoading } from 'expo'

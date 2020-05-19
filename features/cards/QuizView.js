@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { View , Text, TouchableOpacity, StyleSheet, Dimensions, Platform } from 'react-native'
+import { View , Text, TouchableOpacity, StyleSheet, Dimensions, Platform, Animated } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack';
 import Quiz from './Quiz';
 import { white, purple } from '../../utils/colors';
-//import ProgressBar from 'react-native-progress/Bar'
-//import * as Progress from 'react-native-progress';
+
 import { ProgressBarAndroid } from 'react-native';
 import { ProgressViewIOS } from 'react-native';
+import { clearLocalNotification, setLocalNotification } from '../../utils/helpers';
 //import {Surface, Shape} from '@react-native-community/art';
 //import {ProgressView} from "@react-native-community/progress-view";
 
@@ -19,23 +19,34 @@ const QuizView = ({navigation, route}) => {
 
 	const [ count, setCount ] = useState(1)
 	const [ score, setScore ] = useState(0)
+	const [ bounceValue, setBounceValue ] = useState(new Animated.Value(1))
 
 	useEffect(() => {
-		if(count <= qCount)
+		if(count > qCount){
+			setupQuizCompleted()
+		}else{
 			navigation.setOptions({title: `Quiz ${count}/${qCount}`})
-	}, [count, score])
+		}
+	}, [count])
 	
 	const correctAnswer = () => {
 		setCount(count + 1 )
 		setScore(score + 1 )
 	}
-	const inCorrectAnswer = () => {
-		setCount(count + 1 )
-	}
-
+	const inCorrectAnswer = () => setCount(count + 1 )
 	const reset = () => {
 		setCount(1)
 		setScore(0)
+	}
+
+	const setupQuizCompleted = async () => {
+		// then quiz completed. Clean notifications for today
+		return await clearLocalNotification()
+			.then( () => Animated.sequence([
+					Animated.timing(bounceValue, { duration: 200, toValue: 1.07}),
+					Animated.spring(bounceValue, { toValue: 1, friction: 4})
+				]).start())
+			.then(setLocalNotification)
 	}
 
 	const rightWrong = () => (
@@ -73,7 +84,9 @@ const QuizView = ({navigation, route}) => {
 										progress={parseFloat(score/qCount)}
 									/>
 							}
-								<Text style={styles.gaugeText}>You've scored {(score/qCount * 100).toFixed(1)}%</Text>
+								<Animated.Text style={[styles.scoreText, {transform: [{scale: bounceValue}]}]}>
+									You've scored {(score/qCount * 100).toFixed(1)}%
+								</Animated.Text>
 						</View>
 						<TouchableOpacity style={[styles.btn, styles.btnDanger]}
 							onPress={reset}>
@@ -143,7 +156,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  gaugeText: {
+  scoreText: {
     paddingVertical:10,
     fontSize: 24,
 	},

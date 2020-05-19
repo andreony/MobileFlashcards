@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Component } from 'react';
 import { StyleSheet, Text, View, StatusBar, AsyncStorage } from 'react-native';
 import { Provider, useDispatch } from 'react-redux'
 import store from './app/store'
@@ -13,6 +13,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Constants from 'expo-constants';
 import QuizView from './features/cards/QuizView'
+import { setLocalNotification, clearLocalNotification } from './utils/helpers'
 
 const { statusBarHeight } = Constants
 const Stack = createStackNavigator();
@@ -26,20 +27,27 @@ function MyStatusBar({ backgroundColor, ...props}) {
 }
 
 
-export default function App() {
-  return (
-    <Provider store={store}>
-      <AppChild />
-    </Provider>
-  )
+export default class App extends Component {
+  componentDidMount(){
+    //AsyncStorage.clear()
+    clearLocalNotification()
+      .then(() => setLocalNotification())
+  }
+  render(){
+    return (
+      <Provider store={store}>
+        <AppChild />
+      </Provider>
+    )
+  }
 }
 
 function AppChild() {
   const dispatch = useDispatch() 
 
-  useEffect( () => {
+  useEffect(() => {
     dispatch(fetchCardDeksAsync())
-  },[dispatch])
+  }, [dispatch])
 
   return (
     <View style={styles.container}>
