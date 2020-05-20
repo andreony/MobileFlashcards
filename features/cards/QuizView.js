@@ -22,8 +22,10 @@ const QuizView = ({navigation, route}) => {
 	const [ score, setScore ] = useState(0)
 	const [ bounceValue, setBounceValue ] = useState(new Animated.Value(1))
 	
-	const [ isFaceShowing, setFaceShowing ] = useState(true)
-	const [ flip, setFlip ] = useState(false)
+	const [ cardState, setCardState ] = useState({
+		isFaceShowing: true,
+		shouldFlip: false
+	})
 
 	useEffect(() => {
 		if(count > qCount){
@@ -34,25 +36,25 @@ const QuizView = ({navigation, route}) => {
 	}, [count])
 	
 	const correctAnswer = () => {
+		const { isFaceShowing } = cardState
 		setCount(count + 1 )
 		setScore(score + 1 )
 		if(!isFaceShowing){
-			setFlip(true)
+			setCardState(prevState => ({...prevState, shouldFlip: true}))
 		}
-		console.log('correctAnswer flip: ', flip, 'isFaceShowing: ', isFaceShowing)
 	}
 
 	const inCorrectAnswer = () => {
+		const { isFaceShowing } = cardState
 		setCount(count + 1 )
 		if(!isFaceShowing){
-			setFlip(true)
+			setCardState(prevState => ({...prevState, shouldFlip: true}))
 		}
-		console.log('inCorrectAnswer flip: ', flip, 'isFaceShowing: ', isFaceShowing)
 	}
 	const reset = () => {
 		setCount(1)
 		setScore(0)
-		setFlip(false)
+		setCardState(prevState => ({...prevState, shouldFlip: false}))
 	}
 
 	const setupQuizCompleted = async () => {
@@ -67,7 +69,6 @@ const QuizView = ({navigation, route}) => {
 
 	const rightWrong = () => (
 		<View>
-			<Text>flip is: {JSON.stringify(flip)} and faceShowing is: {JSON.stringify(isFaceShowing)}</Text>
 			<TouchableOpacity 
 				style={[styles.btn, styles.btnSuccess]}
 				onPress={correctAnswer}>
@@ -84,11 +85,7 @@ const QuizView = ({navigation, route}) => {
 		<View style={styles.container}>
 			{ count <= qCount 
 				? <View style={styles.quizCardWrapper}>
-						<Quiz {...questions[count -1]} 
-							flip={flip}
-							setFlip={setFlip}
-							setFaceShowing={setFaceShowing} 
-							isFaceShowing={isFaceShowing}/>
+						<Quiz {...questions[count -1]} {...cardState} setCardState={setCardState} /> 
 						{rightWrong()}
 					</View>
 				: <View style={styles.quizCardWrapper}>

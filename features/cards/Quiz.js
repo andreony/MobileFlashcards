@@ -1,34 +1,26 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View, Text, StyleSheet, Dimensions } from 'react-native'
 import FlipCard from 'react-native-flip-card'
-import { lightPurp, lightBlue, gray, white, purple, blue } from '../../utils/colors'
+import { lightPurp, white, purple, blue } from '../../utils/colors'
 
 const viewportWidth = Dimensions.get('window').width
 
-const Quiz = ({question, answer, flip, setFlip, isFaceShowing, setFaceShowing}) => {
+const Quiz = ({question, answer, shouldFlip, setCardState}) => {
 	
-	// setFlipState(flip) isFlipEnd ? setFaceShowing(false) : setFaceShowing(true)
-	console.log('reveived flip val -->', flip, '   isFaceShowing val -->', isFaceShowing)
-
 	return (
 		<FlipCard 
 			friction={6}
 			perspective={1000}
 			flipHorizontal={true}
 			flipVertical={false}
-			flip={flip}
-			onFlipStart={ isFlipStart => {
-				if(isFlipStart){
-					setFaceShowing(true)
-					setFlip(false)
-				}else{
-					setFaceShowing(false)
-				}
-			}}
-			onFlipEnd={ isFlipEnd => { 
-				console.log('isFlipEnd', isFlipEnd, '  shouldFlip: ', flip)
-				//setFlip(false)
-			}}
+			flip={shouldFlip}
+			onFlipStart={ isFlipStart => isFlipStart
+				?	setCardState({
+						isFaceShowing: true,
+						shouldFlip: false
+					})
+				:	setCardState(prevState => ({...prevState, isFaceShowing:false}))
+			}
 			style={[styles.container, styles.card]}>
 			{/* Face Side */}
 			<View style={[styles.cardBody, styles.shadow, {backgroundColor: '#e3f2fd'}]}>
