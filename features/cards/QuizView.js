@@ -7,6 +7,7 @@ import { white, purple } from '../../utils/colors';
 import { ProgressBarAndroid } from 'react-native';
 import { ProgressViewIOS } from 'react-native';
 import { clearLocalNotification, setLocalNotification } from '../../utils/helpers';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 //import {Surface, Shape} from '@react-native-community/art';
 //import {ProgressView} from "@react-native-community/progress-view";
 
@@ -20,6 +21,9 @@ const QuizView = ({navigation, route}) => {
 	const [ count, setCount ] = useState(1)
 	const [ score, setScore ] = useState(0)
 	const [ bounceValue, setBounceValue ] = useState(new Animated.Value(1))
+	
+	const [ isFaceShowing, setFaceShowing ] = useState(true)
+	const [ flip, setFlip ] = useState(false)
 
 	useEffect(() => {
 		if(count > qCount){
@@ -32,11 +36,23 @@ const QuizView = ({navigation, route}) => {
 	const correctAnswer = () => {
 		setCount(count + 1 )
 		setScore(score + 1 )
+		if(!isFaceShowing){
+			setFlip(true)
+		}
+		console.log('correctAnswer flip: ', flip, 'isFaceShowing: ', isFaceShowing)
 	}
-	const inCorrectAnswer = () => setCount(count + 1 )
+
+	const inCorrectAnswer = () => {
+		setCount(count + 1 )
+		if(!isFaceShowing){
+			setFlip(true)
+		}
+		console.log('inCorrectAnswer flip: ', flip, 'isFaceShowing: ', isFaceShowing)
+	}
 	const reset = () => {
 		setCount(1)
 		setScore(0)
+		setFlip(false)
 	}
 
 	const setupQuizCompleted = async () => {
@@ -51,6 +67,7 @@ const QuizView = ({navigation, route}) => {
 
 	const rightWrong = () => (
 		<View>
+			<Text>flip is: {JSON.stringify(flip)} and faceShowing is: {JSON.stringify(isFaceShowing)}</Text>
 			<TouchableOpacity 
 				style={[styles.btn, styles.btnSuccess]}
 				onPress={correctAnswer}>
@@ -67,7 +84,11 @@ const QuizView = ({navigation, route}) => {
 		<View style={styles.container}>
 			{ count <= qCount 
 				? <View style={styles.quizCardWrapper}>
-						<Quiz {...questions[count -1]}/>
+						<Quiz {...questions[count -1]} 
+							flip={flip}
+							setFlip={setFlip}
+							setFaceShowing={setFaceShowing} 
+							isFaceShowing={isFaceShowing}/>
 						{rightWrong()}
 					</View>
 				: <View style={styles.quizCardWrapper}>

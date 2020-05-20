@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux'
 import { addCardDeckAsync, selectCardIds } from './cardsSlice'
 import StyledTextInput from './StyledTextInput'
 import { useSelector } from 'react-redux'
-import { AppLoading } from 'expo'
+//import Toast from 'react-native-simple-toast';
 
 const NewCardDeck = ({ navigation }) => {
 
@@ -26,7 +26,7 @@ const NewCardDeck = ({ navigation }) => {
 	const handleSave = (e) => {
 		e.preventDefault()
 		if(!newDeck.title.trim()){
-			console.log('Title is empty', newDeck)
+			//Toast.showWithGravity('This is a long toast at the top.', Toast.LONG, Toast.TOP);
 			return false
 		}
 		if(deckTitles.includes(newDeck.title)){

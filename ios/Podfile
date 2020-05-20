@@ -1,4 +1,6 @@
 platform :ios, '10.0'
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
 
 require_relative '../node_modules/react-native-unimodules/cocoapods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
@@ -44,5 +46,7 @@ target 'MobileFlashcards' do
   # react-native-cli autolinking
   use_native_modules!
   pod 'react-native-progress-view', :path => '../node_modules/@react-native-community/progress-view'
+
+  pod 'react-native-simple-toast', :path => '../node_modules/react-native-simple-toast'
 
 end
