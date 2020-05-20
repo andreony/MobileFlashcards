@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, StatusBar } from 'react-native';
-import { Provider, useDispatch } from 'react-redux'
+import { Provider, useDispatch, useSelector } from 'react-redux'
 import store from './app/store'
-import { fetchCardDeksAsync } from './features/cards/cardsSlice'
+import { fetchCardDeksAsync, isLoading } from './features/cards/cardsSlice'
 import AddQAndA from './features/cards/AddQAndA'
 import CardDeckView from './features/cards/CardDeckView'
 import Dashboard from './features/cards/Dashboard'
@@ -12,6 +12,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Constants from 'expo-constants';
 import QuizView from './features/cards/QuizView'
 import { setLocalNotification } from './utils/helpers'
+import * as SplashScreen from 'expo-splash-screen'
 
 const { statusBarHeight } = Constants
 const Stack = createStackNavigator();
@@ -35,11 +36,26 @@ export default function App() {
 
 function AppChild() {
   const dispatch = useDispatch() 
+  const isAppLoading = useSelector(isLoading)
 
-  useEffect(() => {
+  useEffect( () => {
+    async function setSpalshScreen() {
+        try {
+        await SplashScreen.preventAutoHideAsync();
+      } catch (e) {
+        console.warn(e);
+      }
+    }
+    setSpalshScreen()
     setLocalNotification()
     dispatch(fetchCardDeksAsync())
+    hideSplashScreenAsync()
   }, [dispatch])
+
+  const hideSplashScreenAsync = async () => {
+    isAppLoading === false 
+      && await SplashScreen.hideAsync(); 
+  };
 
   return (
     <View style={styles.container}>

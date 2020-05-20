@@ -1,6 +1,7 @@
 import { createEntityAdapter, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import cardsAPI from './cardsAPI';
 
+
 export const fetchCardDeksAsync = createAsyncThunk("cards/fetchall", async () => {
 	const results = await cardsAPI.fetchAll();
 	return results
@@ -61,6 +62,7 @@ const cardsSlice= createSlice({
 		})
 	}
 })
+export const isLoading = state => state.cards.loading 
 
 export const {
   selectById: selectCardById,

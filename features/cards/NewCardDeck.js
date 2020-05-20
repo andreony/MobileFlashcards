@@ -2,10 +2,8 @@ import React, { useState } from 'react'
 import { 
 	Text, 
 	View, 
-	TextInput, 
 	StyleSheet,
 	Keyboard,
-	TouchableHighlight,
 	TouchableOpacity,
 	KeyboardAvoidingView
 } from 'react-native'
@@ -14,7 +12,7 @@ import { useDispatch } from 'react-redux'
 import { addCardDeckAsync, selectCardIds } from './cardsSlice'
 import StyledTextInput from './StyledTextInput'
 import { useSelector } from 'react-redux'
-//import Toast from 'react-native-simple-toast';
+//import Toast from 'react-native-simple-toast'; // this errors out - TBD
 
 const NewCardDeck = ({ navigation }) => {
 
@@ -26,7 +24,7 @@ const NewCardDeck = ({ navigation }) => {
 	const handleSave = (e) => {
 		e.preventDefault()
 		if(!newDeck.title.trim()){
-			//Toast.showWithGravity('This is a long toast at the top.', Toast.LONG, Toast.TOP);
+			alert(`Title cannot be empty!`)
 			return false
 		}
 		if(deckTitles.includes(newDeck.title)){
